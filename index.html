@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control inputValue " placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" class="btn button btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img class="img" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 class="name"></h1>
+            <h2 class="country"></h2>
+            <h3 class="temp" ></h3>
+            <h1 class="lead desc "></h1>
+        </div>
+    </div>
+    <script>
+       
+        let button = document.querySelector(".button");
+        let inputValue = document.querySelector(".inputValue");
+        let name = document.querySelector(".name");
+        let desc = document.querySelector(".desc");
+       let temp = document.querySelector(".temp");
+       
+
+            button.addEventListener("click",function(){
+                fetch("http://api.openweathermap.org/data/2.5/weather?q="+inputValue.value+"&appid=feaf06b6c747fc0e7696fde4f4a1e9af")
+        .then(res => res.json())
+        .then(data => {
+           let nameValue = data.name;
+            let tempValue = data.main.temp;
+            let descValue = data.weather[0].description;
+            name.innerHTML = nameValue;
+            temp.innerHTML =Math.floor(tempValue - 270 ) + "°C";
+            desc.innerHTML = descValue;
+           
+           
+        })
+        .catch(error => alert(`1.please turn on internet connection.
+2.please do not enter wrong city name.`))
+
+
+
+            })
+       
+    </script>
+
+</body>
+  
+</html>
